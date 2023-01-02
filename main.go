@@ -1,31 +1,28 @@
 package main
 
 import (
-	"github.com/jung-kurt/gofpdf"
-)
+	"log"
+	"os"
 
+	"github.com/pdfcpu/pdfcpu/pkg/api"
+)
 
 func main() {
 
-	///var pts []gofpdf.PointType
-
-	pdf := gofpdf.New("P", "mm", "A4", "") // A4 210.0 x 297.0
-	pdf.AddPage()
-	//pdf.SetDrawColor(50, 50, 50)
-	//pdf.SetFont("Arial", "B", 16)
-
-	pts := []gofpdf.PointType{
-		{X: 0, Y: 0},
-		{X: 0, Y: 100},
-		{X: 100, Y: 100},
-		{X: 100, Y: 0},
+	if len(os.Args) < 3 {
+		log.Printf("\nUsage:\n\t%s <inputfile> <output-dir>\n\n", os.Args[0])
 	}
 
-	pdf.Polygon(pts, "D")
+	inputFile := os.Args[1]
+	outputDir := os.Args[2]
 
-	fileStr := "hello.pdf"
-	//pdf.OpenLayerPane()
-	//pdf.OutputFileAndClose(fileStr)
-	//example.Summary(err, fileStr)
-	pdf.Output()
+	f, err := os.Open(inputFile)
+	if err != nil {
+		log.Fatalf("Unable to open file '%s': %v", inputFile, err)
+	}
+
+	err = api.ExtractImages(f, outputDir, nil, nil)
+	if err != nil {
+		log.Fatalf("Unable to extract images from '%s' into '%s': %v", inputFile, outputDir, err)
+	}
 }
