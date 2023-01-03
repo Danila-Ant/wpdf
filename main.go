@@ -9,20 +9,17 @@ import (
 
 func main() {
 
-	if len(os.Args) < 3 {
-		log.Printf("\nUsage:\n\t%s <inputfile> <output-dir>\n\n", os.Args[0])
-	}
 
-	inputFile := os.Args[1]
-	outputDir := os.Args[2]
+	inputFile := "hello.pdf"
+	outputDir := ""
 
-	f, err := os.Open(inputFile)
-	if err != nil {
-		log.Fatalf("Unable to open file '%s': %v", inputFile, err)
-	}
+	f := os.Open(inputFile)
 
-	err = api.ExtractImages(f, outputDir, nil, nil)
-	if err != nil {
-		log.Fatalf("Unable to extract images from '%s' into '%s': %v", inputFile, outputDir, err)
-	}
+
+	var outputDirs []string
+	outputDirs[0] = outputDir
+
+	err = api.AddTextWatermarksFile(f, outputDir, , false, "schtamp", "description")
+	
+
 }
