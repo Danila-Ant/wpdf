@@ -2,24 +2,32 @@ package main
 
 import (
 	"log"
-	"os"
 
-	"github.com/pdfcpu/pdfcpu/pkg/api"
+	api "github.com/pdfcpu/pdfcpu/pkg/api"
+	pdfcpu "github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
 )
 
 func main() {
 
+	var err error
+	var inFile = "in.pdf"
+	var outFile = "out.pdf"
 
-	inputFile := "hello.pdf"
-	outputDir := ""
+	wm := pdfcpu.DefaultWatermarkConfig()
+	unit := pdfcpu.POINTS
 
-	f := os.Open(inputFile)
+	onTop := true // we are testing stamps
 
+	wm, err = api.TextWatermark("test texst",
+		"font:Courier, points:48, col: 1 0 0, rot:0, sc:1 abs",
+		onTop,
+		false,
+		unit)
 
-	var outputDirs []string
-	outputDirs[0] = outputDir
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	err = api.AddTextWatermarksFile(f, outputDir, , false, "schtamp", "description")
-	
+	api.AddWatermarksFile(inFile, outFile, []string{"1"}, wm, nil)
 
 }
