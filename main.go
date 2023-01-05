@@ -16,10 +16,26 @@ func main() {
 	wm := pdfcpu.DefaultWatermarkConfig()
 	unit := pdfcpu.POINTS
 
-	onTop := true // we are testing stamps
+	onTop := true
 
-	wm, err = api.TextWatermark("test texst",
-		"font:Courier, points:48, col: 1 0 0, rot:0, sc:1 abs",
+	// wm, err = api.TextWatermark("test 1",
+	// 	"font:Courier, points:48, col: 1 0 0, rot:0, sc:1 abs",
+	// 	onTop,
+	// 	false,
+	// 	unit)
+
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// api.AddWatermarksFile(inFile, outFile, []string{"1"}, wm, nil)
+
+	// pdfcpu stamp add -mode text -- "Some multi\nline text"
+	// "ma:5, bo:7 round .3 .7 .7, fillc:#3277d3, bgcol:#beded9, rot:0" in.pdf out.pdf
+	//"font:Helvetica, points:24, rtl:off, sc:0.5 rel, pos:c, off:0 0, align:c, fillc:#808080, strokec:#808080, rot:0, op:1, mo:0, ma:5, bo:7 round .3 .7 .7, bgcol:#beded9"
+
+	wm, err = api.TextWatermark("test 2 test 2",
+		"ma:0, bo:0, rot:0",
 		onTop,
 		false,
 		unit)
